@@ -35,8 +35,8 @@ export default function Home() {
             </h1>
 
             <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
-              เครื่องมือจัดสเปคคอมพิวเตอร์ที่แม่นยำที่สุด เช็คความเข้ากันได้ของอุปกรณ์ 
-              คำนวณคะแนนความแรง และเปรียบเทียบราคาที่ดีที่สุดในตลาด
+              The world's most precise PC building tool. Check component compatibility, 
+              calculate performance benchmarks, and compare the best market prices in real-time.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -45,7 +45,7 @@ export default function Home() {
                 className="group relative px-10 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-[2rem] font-black uppercase tracking-widest text-sm overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-cyan-500/20"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <span className="relative flex items-center gap-2">เริ่มจัดสเปคเลย <Zap size={18} fill="currentColor" /></span>
+                <span className="relative flex items-center gap-2">Start Your Build <Zap size={18} fill="currentColor" /></span>
               </Link>
             </div>
           </div>
@@ -62,8 +62,8 @@ export default function Home() {
                        <div className="relative">
                           <div className="w-32 h-32 rounded-full border-[10px] border-white/5 border-t-cyan-500 animate-spin-slow"></div>
                           <div className="absolute inset-0 flex flex-col items-center justify-center">
-                             <span className="text-3xl font-black text-white italic">99%</span>
-                             <span className="text-[8px] text-cyan-400 font-bold tracking-widest">PERFECT</span>
+                              <span className="text-3xl font-black text-white italic">99%</span>
+                              <span className="text-[8px] text-cyan-400 font-bold tracking-widest">PERFECT</span>
                           </div>
                        </div>
                   </div>
@@ -75,9 +75,9 @@ export default function Home() {
         {/* Features Grid */}
         <div className="mt-24 grid md:grid-cols-3 gap-6">
           {[
-            { icon: <Monitor className="text-cyan-500" />, title: "Visual Builder", desc: "จัดสเปคแบบเห็นภาพรวม ใช้งานง่ายแม้เป็นมือใหม่" },
-            { icon: <ShieldCheck className="text-purple-500" />, title: "Compatibility", desc: "ระบบอัจฉริยะตรวจสอบความเข้ากันได้ของอุปกรณ์" },
-            { icon: <Trophy className="text-yellow-500" />, title: "Best Rankings", desc: "เปรียบเทียบอันดับความแรงและความคุ้มค่าแบบ Real-time" }
+            { icon: <Monitor className="text-cyan-500" />, title: "Visual Builder", desc: "Design your setup with an intuitive interface. Simple for beginners, powerful for pros." },
+            { icon: <ShieldCheck className="text-purple-500" />, title: "Compatibility", desc: "Smart AI-driven system to ensure every component works perfectly together." },
+            { icon: <Trophy className="text-yellow-500" />, title: "Market Ranking", desc: "Real-time performance benchmarks and value-for-money comparisons." }
           ].map((feature, idx) => (
             <div key={idx} className="p-8 rounded-[2.5rem] bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-white/5 hover:border-cyan-500/50 transition-all group">
               <div className="w-14 h-14 rounded-2xl bg-white dark:bg-white/5 flex items-center justify-center mb-6 shadow-sm group-hover:scale-110">

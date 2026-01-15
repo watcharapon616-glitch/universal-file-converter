@@ -5,10 +5,9 @@ import {
     Share2, AlertTriangle, CheckCircle2, RotateCcw,
     Store, ChevronRight
 } from 'lucide-react';
-// Builder.tsx บรรทัดที่ 8
-// Builder.tsx บรรทัดที่ 9
-import type { Product } from "./part"; // แยกเอา Product มาเป็น type
-import { products, categories as DB_CATEGORIES } from "./part"; // ที่เหลือเอามาปกติ
+import type { Product } from "./part";
+import { products, categories as DB_CATEGORIES } from "./part";
+
 export default function Builder() {
     const navigate = useNavigate();
     const [selectedParts, setSelectedParts] = useState<Record<string, Product>>({});
@@ -22,7 +21,7 @@ export default function Builder() {
         const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
         if (!matchesSearch) return false;
 
-        // กรอง Socket ระหว่าง CPU และ Mainboard
+        // Socket Compatibility Filter
         if (activeCategory === 'Mainboard' && selectedParts['CPU']) {
             return product.socket === selectedParts['CPU'].socket;
         }
@@ -32,15 +31,14 @@ export default function Builder() {
         return true;
     });
 
-    // 2. Calculation Logic
+    // 2. Calculation Logic (Converted to USD for Global Market)
     const getBestPrice = (p: Product) => Math.min(...Object.values(p.prices));
-
     const totalPrice = Object.values(selectedParts).reduce((sum, p) => sum + getBestPrice(p), 0);
 
     const speedScore = Math.round(
         ((selectedParts['CPU']?.speed || 0) * 0.4) +
         ((selectedParts['GPU']?.speed || 0) * 0.45) +
-        (Object.values(selectedParts).length * 2) // เพิ่มคะแนนตามจำนวนอุปกรณ์ที่ใส่
+        (Object.values(selectedParts).length * 2)
     );
 
     const checkPSU = () => {
@@ -48,7 +46,7 @@ export default function Builder() {
         if (!psu) return { status: 'ok' };
         const totalWatt = (selectedParts['CPU']?.wattage || 0) + (selectedParts['GPU']?.wattage || 0) + 100;
         if (totalWatt > (psu.wattLimit || 0)) {
-            return { status: 'error', message: `Power Alert: ต้องการ ~${totalWatt}W แต่ PSU จ่ายได้ ${psu.wattLimit}W` };
+            return { status: 'error', message: `Power Alert: Requires ~${totalWatt}W but PSU provides ${psu.wattLimit}W` };
         }
         return { status: 'ok' };
     };
@@ -70,15 +68,15 @@ export default function Builder() {
         <div className="min-h-screen bg-white dark:bg-[#020617] transition-colors pb-20">
             <main className="max-w-7xl mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
 
-                {/* รายการเลือกอุปกรณ์ (ฝั่งซ้าย) */}
+                {/* Left Side: Component Selection */}
                 <div className="lg:col-span-3 space-y-6">
                     <div className="flex justify-between items-center">
                         <h2 className="text-4xl font-black italic uppercase dark:text-white tracking-tighter">PC Configurator</h2>
                         <button
                             onClick={() => setSelectedParts({})}
-                            className="flex items-center gap-2 text-[10px] font-black uppercase text-red-500 bg-red-500/10 px-4 py-2 rounded-full hover:bg-red-500 transition-all"
+                            className="flex items-center gap-2 text-[10px] font-black uppercase text-red-500 bg-red-500/10 px-4 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all"
                         >
-                            <RotateCcw size={14} /> Reset Build
+                            <span className="flex items-center gap-1.5"><RotateCcw size={14} /> Reset Build</span>
                         </button>
                     </div>
 
@@ -100,14 +98,14 @@ export default function Builder() {
                                             <Zap size={24} className="text-slate-300" />
                                         )}
                                     </div>
-                                    <div>
+                                    <div className="flex-1 min-w-0">
                                         <p className="text-[10px] font-black text-cyan-500 uppercase tracking-widest">{cat.name}</p>
                                         <p className="font-bold text-sm dark:text-white truncate max-w-[150px]">
-                                            {selectedParts[cat.id]?.name || `Choose ${cat.name}`}
+                                            {selectedParts[cat.id]?.name || `Select ${cat.name}`}
                                         </p>
                                         {selectedParts[cat.id] && (
                                             <p className="text-xs font-black text-slate-400 font-mono italic">
-                                                {getBestPrice(selectedParts[cat.id]).toLocaleString()} ฿
+                                                ${getBestPrice(selectedParts[cat.id]).toLocaleString()}
                                             </p>
                                         )}
                                     </div>
@@ -123,7 +121,7 @@ export default function Builder() {
                     </div>
                 </div>
 
-                {/* Sidebar สรุปผล (ฝั่งขวา) */}
+                {/* Right Side: Summary Sidebar */}
                 <div className="lg:col-span-1">
                     <div className="bg-slate-900 dark:bg-slate-900/80 backdrop-blur-xl text-white p-8 rounded-[3.5rem] shadow-2xl sticky top-24 border border-white/5">
                         <div className="text-center mb-10">
@@ -139,7 +137,7 @@ export default function Builder() {
                         <div className="space-y-6 pt-6 border-t border-white/10">
                             <div className="flex justify-between items-end">
                                 <span className="text-xs font-bold text-slate-400 uppercase">Estimated Total</span>
-                                <span className="text-3xl font-black font-mono text-cyan-400">{totalPrice.toLocaleString()} ฿</span>
+                                <span className="text-3xl font-black font-mono text-cyan-400">${totalPrice.toLocaleString()}</span>
                             </div>
 
                             <div className="grid gap-3">
@@ -151,7 +149,7 @@ export default function Builder() {
                                     <Share2 size={18} /> Share Configuration
                                 </button>
                                 <button className="w-full py-5 bg-cyan-600/20 border border-cyan-500/30 text-cyan-400 rounded-[2rem] font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 hover:bg-cyan-600 hover:text-white transition-all">
-                                    <ShoppingCart size={18} /> Checkout All
+                                    <ShoppingCart size={18} /> Purchase via Amazon
                                 </button>
                             </div>
                         </div>
@@ -200,24 +198,24 @@ export default function Builder() {
                                         <div className="w-20 h-20 rounded-2xl bg-white shadow-md overflow-hidden group-hover:scale-110 transition-transform">
                                             <img src={p.image} className="w-full h-full object-cover" alt="" />
                                         </div>
-                                        <div className="flex-1">
+                                        <div className="flex-1 min-w-0">
                                             <div className="flex justify-between items-start">
                                                 <div>
                                                     <p className="text-[10px] font-black text-cyan-500 uppercase">{p.brand} {p.socket && `• ${p.socket}`}</p>
                                                     <p className="font-bold text-lg dark:text-white leading-tight">{p.name}</p>
                                                 </div>
                                                 <div className="text-right">
-                                                    <p className="text-xl font-black text-slate-900 dark:text-white font-mono">{getBestPrice(p).toLocaleString()} ฿</p>
+                                                    <p className="text-xl font-black text-slate-900 dark:text-white font-mono">${getBestPrice(p).toLocaleString()}</p>
                                                     <p className="text-[9px] font-bold text-green-500 uppercase tracking-tighter">Best Price Found</p>
                                                 </div>
                                             </div>
 
-                                            {/* รายละเอียดราคาแต่ละร้าน */}
+                                            {/* Store Pricing Details */}
                                             <div className="flex gap-4 mt-3 pt-3 border-t dark:border-white/5">
                                                 {Object.entries(p.prices).map(([shop, price]) => (
                                                     <div key={shop} className="flex items-center gap-1.5 opacity-60">
                                                         <Store size={10} className="text-slate-400" />
-                                                        <span className="text-[9px] font-bold uppercase dark:text-slate-300">{shop}: {price.toLocaleString()}</span>
+                                                        <span className="text-[9px] font-bold uppercase dark:text-slate-300">{shop}: ${price.toLocaleString()}</span>
                                                     </div>
                                                 ))}
                                             </div>

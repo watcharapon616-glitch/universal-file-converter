@@ -16,21 +16,25 @@ export default function Navbar({ isDark, setIsDark }: { isDark: boolean, setIsDa
                 <Cpu className="text-cyan-600 dark:text-cyan-400" size={28} />
               </div>
             </div>
-            <span className="text-2xl font-black tracking-tighter text-slate-800 dark:text-white uppercase italic">PC Builder <span className="text-cyan-500">TH</span></span>
+            {/* ปรับชื่อแบรนด์ให้ดู Global */}
+            <span className="text-2xl font-black tracking-tighter text-slate-800 dark:text-white uppercase italic">
+              PC Builder <span className="text-cyan-500 text-sm align-top">PRO</span>
+            </span>
           </Link>
 
           <div className="flex items-center gap-4">
             <div className="hidden md:flex gap-2 text-sm items-center">
-              <Link to="/" className={`px-4 py-2 font-bold transition-all ${isActive('/') ? 'text-cyan-500' : 'text-slate-500 dark:text-slate-400 hover:text-cyan-500'}`}>หน้าแรก</Link>
+              <Link to="/" className={`px-4 py-2 font-bold transition-all ${isActive('/') ? 'text-cyan-500' : 'text-slate-500 dark:text-slate-400 hover:text-cyan-500'}`}>
+                Home
+              </Link>
               
-              {/* เพิ่มปุ่มแชร์ใน Desktop Navbar */}
               <Link to="/shared-build" className={`px-4 py-2 font-bold transition-all ${isActive('/shared-build') ? 'text-cyan-500' : 'text-slate-500 dark:text-slate-400 hover:text-cyan-500'}`}>
-                อันดับ
+                Rankings
               </Link>
 
               <Link to="/build" className={`group relative px-6 py-2.5 rounded-xl font-black overflow-hidden transition-all ${isActive('/build') ? 'text-white' : 'text-slate-700 dark:text-slate-300'}`}>
                 <div className={`absolute inset-0 transition-all duration-300 ${isActive('/build') ? 'bg-gradient-to-r from-cyan-600 to-purple-600' : 'bg-slate-200 dark:bg-slate-800'}`}></div>
-                <span className="relative flex items-center gap-2"><Zap size={16}/> จัดสเปค</span>
+                <span className="relative flex items-center gap-2"><Zap size={16}/> Configurator</span>
               </Link>
             </div>
             
@@ -41,7 +45,7 @@ export default function Navbar({ isDark, setIsDark }: { isDark: boolean, setIsDa
         </div>
       </nav>
       
-      {/* Mobile Nav - แก้ไขจาก button เป็น Link */}
+      {/* Mobile Nav */}
       <nav className="md:hidden fixed bottom-6 left-6 right-6 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-2 shadow-2xl">
         <div className="flex justify-around items-center">
           <Link to="/" className={`flex flex-col items-center gap-1 p-3 transition-all ${isActive('/') ? 'text-cyan-500' : 'text-slate-400'}`}>
@@ -55,11 +59,10 @@ export default function Navbar({ isDark, setIsDark }: { isDark: boolean, setIsDa
             <span className="text-[9px] font-black uppercase">Build</span>
           </Link>
 
-          {/* แก้ไขจุดนี้: เปลี่ยนจาก button เป็น Link ไปยัง /shared-build */}
           <Link to="/shared-build" className={`relative flex flex-col items-center gap-1 p-3 transition-all ${isActive('/shared-build') ? 'text-white' : 'text-slate-400'}`}>
             {isActive('/shared-build') && <div className="absolute inset-0 bg-gradient-to-tr from-cyan-600 to-purple-600 rounded-2xl -z-10"></div>}
             <Share2 size={22} />
-            <span className="text-[9px] font-black uppercase">Share</span>
+            <span className="text-[9px] font-black uppercase">Ranks</span>
           </Link>
         </div>
       </nav>
