@@ -25,17 +25,21 @@ jobs:
         run: npm install --legacy-peer-deps --force
 
       - name: Build
-        # ใช้ npx vite build เพื่อเลี่ยง Error จาก TypeScript
+        # ใช้ npx vite build เพื่อข้ามการเช็ค TypeScript ที่เคร่งครัดเกินไป
         run: CI=false npx vite build
 
       - name: Prepare subfolder
-        # สร้างเฉพาะโฟลเดอร์โปรเจกต์ เพื่อให้โดเมนหลัก zynksite.com มองเห็นเส้นทางนี้
+        # ปรับโครงสร้างโฟลเดอร์ให้รองรับทั้ง Root และ Subfolder เพื่อแก้ปัญหา 404
         run: |
-          mkdir temp_dist
-          mkdir -p temp_dist/my-pc-builder
-          cp -r dist/* temp_dist/my-pc-builder/
+          mkdir final_dist
+          # 1. ก๊อปปี้ไฟล์ทั้งหมดไปไว้ในโฟลเดอร์ย่อยเพื่อให้ตรงกับ base path ของ Vite
+          mkdir -p final_dist/my-pc-builder
+          cp -r dist/* final_dist/my-pc-builder/
+          # 2. ก๊อปปี้ไฟล์ index.html ออกมาไว้ที่ root ด้วยเพื่อป้องกันหน้า 404
+          cp dist/index.html final_dist/
+          # 3. เตรียมโฟลเดอร์สำหรับการ Upload
           rm -rf dist
-          mv temp_dist dist
+          mv final_dist dist
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
