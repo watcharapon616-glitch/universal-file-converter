@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/my-pc-builder/', // แก้เป็นแบบนี้ (ไม่มี / ข้างหน้า) เพื่อให้ลิงก์สัมพันธ์กับ GitHub Pages
+  base: '/my-pc-builder/', // ต้องมี / ปิดท้ายแบบนี้เท่านั้น
 })

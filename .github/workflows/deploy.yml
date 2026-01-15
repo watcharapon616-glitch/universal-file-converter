@@ -25,18 +25,14 @@ jobs:
         run: npm install --legacy-peer-deps --force
 
       - name: Build
-        # ข้ามการตรวจสอบ TypeScript เพื่อให้ Build สำเร็จ
         run: CI=false npx vite build
 
       - name: Prepare subfolder
-        # เทคนิคนี้ช่วยให้เข้าผ่าน zynksite.com/my-pc-builder/ ได้โดยไม่ต้องตั้งค่าโดเมนซ้ำ
+        # ก๊อปปี้ไฟล์ทั้งหมดไปไว้ในโฟลเดอร์ชื่อเดียวกับ base path
         run: |
           mkdir final_dist
-          # 1. สร้างโฟลเดอร์ชื่อ my-pc-builder เพื่อให้สอดคล้องกับ URL
           mkdir -p final_dist/my-pc-builder
           cp -r dist/* final_dist/my-pc-builder/
-          # 2. ก๊อปปี้ index.html มาไว้ที่ root เพื่อช่วยในการค้นหาไฟล์ของ GitHub Pages
-          cp dist/index.html final_dist/
           rm -rf dist
           mv final_dist dist
 
