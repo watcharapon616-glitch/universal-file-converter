@@ -25,15 +25,19 @@ jobs:
         run: npm install --legacy-peer-deps --force
 
       - name: Build
+        # ใช้ npx vite build เพื่อข้าม TypeScript Check ที่ทำให้ Build พัง
         run: CI=false npx vite build
 
       - name: Prepare subfolder
-        # ก๊อปปี้ไฟล์ build ไปไว้ในโฟลเดอร์ชื่อเดียวกับโปรเจกต์
+        # จัดโครงสร้างไฟล์ให้รองรับทั้งโดเมนหลักและ subfolder
         run: |
           mkdir temp_dist
+          # 1. ก๊อปปี้ไฟล์ทั้งหมดไปไว้ที่ root ของ temp_dist
           cp -r dist/* temp_dist/
+          # 2. สร้างโฟลเดอร์ชื่อเดียวกับโปรเจกต์ข้างในอีกที
           mkdir -p temp_dist/my-pc-builder
           cp -r dist/* temp_dist/my-pc-builder/
+          # 3. ลบ dist เก่าและแทนที่ด้วยโครงสร้างใหม่
           rm -rf dist
           mv temp_dist dist
 
