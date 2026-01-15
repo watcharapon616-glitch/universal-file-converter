@@ -1,51 +1,29 @@
 name: Deploy to GitHub Pages
-
 on:
   push:
     branches: ["main"]
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "18"
-
       - name: Install dependencies
         run: npm install --legacy-peer-deps --force
-
       - name: Build
-        # ใช้ npx vite build เพื่อข้ามการเช็ค TypeScript ที่เคร่งครัดเกินไป
         run: CI=false npx vite build
-
-      - name: Prepare subfolder
-        # ปรับโครงสร้างโฟลเดอร์ให้รองรับทั้ง Root และ Subfolder เพื่อแก้ปัญหา 404
-        run: |
-          mkdir final_dist
-          # 1. ก๊อปปี้ไฟล์ทั้งหมดไปไว้ในโฟลเดอร์ย่อยเพื่อให้ตรงกับ base path ของ Vite
-          mkdir -p final_dist/my-pc-builder
-          cp -r dist/* final_dist/my-pc-builder/
-          # 2. ก๊อปปี้ไฟล์ index.html ออกมาไว้ที่ root ด้วยเพื่อป้องกันหน้า 404
-          cp dist/index.html final_dist/
-          # 3. เตรียมโฟลเดอร์สำหรับการ Upload
-          rm -rf dist
-          mv final_dist dist
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
