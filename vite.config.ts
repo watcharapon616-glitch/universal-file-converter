@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  base: './', // ใช้ './' เพื่อให้รองรับทั้งโดเมนส่วนตัวและลิงก์ GitHub
+  base: './', // แก้ไขจุดนี้ครับ
   plugins: [react()],
 })
