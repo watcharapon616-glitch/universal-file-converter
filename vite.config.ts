@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/universal-file-converter/', // ต้องมี / ปิดหัวท้ายแบบนี้เป๊ะๆ ครับ
+  base: '/', // เปลี่ยนจาก '/universal-file-converter/' เป็นแค่ '/' ตัวเดียว
 })

@@ -22,7 +22,7 @@ function App() {
   }, [isDark]);
 
   return (
-    <Router basename="/universal-file-converter">
+    <Router>
       <div className="min-h-screen bg-white dark:bg-[#020617] transition-colors duration-300">
         <Navbar isDark={isDark} setIsDark={setIsDark} />
         <Routes>
