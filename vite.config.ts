@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  base: './', // แก้ไขจุดนี้ครับ
+  base: '/universal-file-converter/', // เปลี่ยนตรงนี้ให้เป็นชื่อ repository
   plugins: [react()],
 })
