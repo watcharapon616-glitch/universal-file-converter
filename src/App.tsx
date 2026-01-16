@@ -7,8 +7,8 @@ import SharedBuild from './SharedBuild';
 
 function App() {
   const [isDark, setIsDark] = useState(() => {
-    return localStorage.getItem('theme') === 'dark' || 
-    (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    return localStorage.getItem('theme') === 'dark' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
   });
 
   useEffect(() => {
@@ -22,13 +22,13 @@ function App() {
   }, [isDark]);
 
   return (
-    <Router>
+    <Router basename="/universal-file-converter">
       <div className="min-h-screen bg-white dark:bg-[#020617] transition-colors duration-300">
         <Navbar isDark={isDark} setIsDark={setIsDark} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/build" element={<Builder />} />
-          <Route path="/shared-build" element={<SharedBuild />} /> 
+          <Route path="/shared-build" element={<SharedBuild />} />
         </Routes>
       </div>
     </Router>
