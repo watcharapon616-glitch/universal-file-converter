@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: './', // สำคัญมาก: ใช้จุดและสแลช เพื่อให้รองรับการรันบน GitHub Pages
+  base: '/universal-file-converter/', // ต้องมี / ปิดหัวท้ายแบบนี้เป๊ะๆ ครับ
 })
